@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Mamaa ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+
+body{
+height:100vh;
+background:radial-gradient(circle at top,#ff758c,#ff7eb3);
+overflow:hidden;
+color:white;
+transition:background 2s ease;
+}
+
+body.midnight{
+background:radial-gradient(circle at top,#0f2027,#203a43,#2c5364);
+}
+
+/* Stars */
+.star{
+position:absolute;
+width:2px;height:2px;
+background:white;border-radius:50%;
+animation:twinkle 2s infinite alternate;
+}
+@keyframes twinkle{from{opacity:.3}to{opacity:1}}
+
+/* Lock */
+.lock{
+position:fixed;inset:0;
+background:#000000dd;
+display:flex;justify-content:center;align-items:center;
+z-index:10;
+}
+.lock-box{
+background:rgba(255,255,255,.1);
+padding:30px;border-radius:20px;text-align:center;
+}
+.lock input{
+padding:10px;border-radius:10px;border:none;margin-top:10px;text-align:center;
+}
+
+/* Main Card */
+.container{
+position:absolute;
+top:50%;left:50%;
+transform:translate(-50%,-50%);
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(15px);
+padding:35px;border-radius:25px;
+width:90%;max-width:480px;text-align:center;
+box-shadow:0 30px 60px rgba(0,0,0,.4);
+display:none;
+}
+
+/* Ring */
+.ring{
+width:130px;margin:20px auto;
+animation:float 3s ease-in-out infinite, spin 8s linear infinite;
+}
+@keyframes float{50%{transform:translateY(-15px)}}
+@keyframes spin{to{transform:rotateY(360deg)}}
+
+/* Gifts */
+.gifts{
+display:flex;justify-content:center;gap:15px;
+flex-wrap:wrap;margin-top:15px;
+}
+.gift{
+font-size:45px;
+animation:giftFloat 3s ease-in-out infinite;
+}
+@keyframes giftFloat{50%{transform:translateY(-10px)}}
+
+/* Letter */
+.letter{margin-top:20px;line-height:1.6;min-height:160px}
+
+/* Secret */
+.secret{
+display:none;margin-top:20px;
+font-style:italic;opacity:0;
+animation:fadeIn 2s forwards;
+}
+
+.countdown{margin-top:15px;font-weight:bold}
+
+/* Hearts */
+.heart{
+position:absolute;font-size:20px;
+animation:fall linear infinite;
+}
+@keyframes fall{to{transform:translateY(100vh);opacity:0}}
+
+/* Confetti */
+.confetti{
+position:absolute;width:8px;height:8px;
+animation:fall linear forwards;
+}
+
+/* Fireworks */
+.firework{
+position:absolute;width:6px;height:6px;border-radius:50%;
+animation:explode 1.2s forwards;
+}
+@keyframes explode{
+to{transform:translate(var(--x),var(--y));opacity:0}
+}
+
+button{
+padding:12px 25px;border:none;border-radius:30px;
+margin-top:15px;font-size:1em;
+background:#ff4d6d;color:white;cursor:pointer;
+}
+.whatsapp{background:#25D366}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+
+<body>
+
+<div class="lock" id="lock">
+<div class="lock-box">
+<h2>Enter Our Special Code 💖</h2>
+<input type="password" id="pwd" placeholder="****">
+<br><br>
+<button onclick="unlock()">Unlock 💕</button>
+</div>
+</div>
+
+<div class="container" id="main">
+<h1>Happy Valentine’s Day Mamaa ❤️</h1>
+<p>Will you be my forever Valentine?</p>
+
+<button onclick="startLove()">Yes 💍</button>
+
+<div id="ringBox" style="display:none">
+
+<!-- Ring -->
+<svg class="ring" viewBox="0 0 200 200">
+<circle cx="100" cy="130" r="40" fill="none" stroke="#d4af37" stroke-width="10"/>
+<polygon points="80,90 100,40 120,90"
+fill="#e6f7ff" stroke="#b3ecff" stroke-width="2">
+<animate attributeName="fill-opacity"
+from="0.7" to="1" dur="1s" repeatCount="indefinite"/>
+</polygon>
+</svg>
+
+<!-- Gifts -->
+<div class="gifts">
+<div class="gift">🍾</div>
+<div class="gift">🧸</div>
+<div class="gift">🍫</div>
+<div class="gift">💐</div>
+</div>
+
+<div class="letter" id="letter"></div>
+
+<div class="secret" id="secret">
+Mamaa… when the world fades and it's just us,
+I want to be the warmth you melt into,
+the place your heart feels safest,
+and the love that holds you close forever.
+</div>
+
+<div class="countdown" id="countdown"></div>
+
+<button class="whatsapp" onclick="shareWhatsApp()">
+💬 She said YES
+</button>
+
+</div>
+
+<iframe
+src="https://open.spotify.com/embed/track/4FywKcIuhSWgqtIMFnLaIC"
+width="100%" height="80"
+frameborder="0"
+allow="autoplay; encrypted-media">
+</iframe>
+
+</div>
+
+<script>
+
+/* Stars */
+for(let i=0;i<120;i++){
+const s=document.createElement("div");
+s.className="star";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+document.body.appendChild(s);
+}
+
+/* Unlock */
+function unlock(){
+if(document.getElementById("pwd").value==="021225"){
+document.getElementById("lock").style.display="none";
+document.getElementById("main").style.display="block";
+}else alert("Wrong code 💔");
+}
+
+/* Start Love */
+function startLove(){
+document.getElementById("ringBox").style.display="block";
+document.body.classList.add("midnight");
+vibrate();
+typeWriter();
+confetti();
+setTimeout(fireworks,1200);
+setTimeout(()=>document.getElementById("secret").style.display="block",8000);
+startCountdown();
+}
+
+/* Vibration */
+function vibrate(){
+if(navigator.vibrate){
+navigator.vibrate([200,100,200,100,300]);
+}
+}
+
+/* Typewriter */
+const text=`My beautiful Mamaa ❤️
+
+You are my peace, my happiness, my forever.
+Every heartbeat whispers your name.
+I promise to love you deeply,
+protect you fiercely,
+and choose you every single day.
+
+This ring is my forever promise 💖`;
+
+let i=0;
+function typeWriter(){
+if(i<text.length){
+document.getElementById("letter").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typeWriter,40);
+}
+}
+
+/* Countdown */
+const anniversary = new Date("2026-12-02");
+function startCountdown(){
+setInterval(()=>{
+const now=new Date();
+const diff=anniversary-now;
+const days=Math.floor(diff/(1000*60*60*24));
+document.getElementById("countdown").innerText =
+`⏳ ${days} days until our anniversary ❤️`;
+},1000);
+}
+
+/* WhatsApp */
+function shareWhatsApp(){
+const msg = encodeURIComponent("She said YES ❤️💍 Our forever just began.");
+window.open(`https://wa.me/?text=${msg}`,"_blank");
+}
+
+/* Hearts */
+setInterval(()=>{
+const h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=Math.random()*3+2+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},300);
+
+/* Confetti */
+function confetti(){
+for(let i=0;i<120;i++){
+const c=document.createElement("div");
+c.className="confetti";
+c.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
+c.style.left=Math.random()*100+"vw";
+c.style.animationDuration=Math.random()*3+2+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),4000);
+}
+}
+
+/* Fireworks */
+function fireworks(){
+for(let i=0;i<200;i++){
+const f=document.createElement("div");
+f.className="firework";
+f.style.left="50vw";
+f.style.top="40vh";
+f.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
+f.style.setProperty('--x',Math.random()*400-200+"px");
+f.style.setProperty('--y',Math.random()*400-200+"px");
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),1200);
+}
+}
+
+</script>
+</body>
+</html>
